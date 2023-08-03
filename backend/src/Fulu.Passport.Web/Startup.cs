@@ -195,7 +195,8 @@ namespace Fulu.Passport.Web
         private void ConfigureEntityFrameworkCore(IServiceCollection services, ConnectionStrings connectionStrings)
         {
             //添加King
-            services.AddEntityFrameworkCore<FuluDbContext>(opt => opt.UseMySql(connectionStrings.MySql, b => b.MigrationsAssembly("Fulu.Passport.Web")));
+            //services.AddEntityFrameworkCore<FuluDbContext>(opt => opt.UseMySQL(connectionStrings.MySql, b => b.MigrationsAssembly("Fulu.Passport.Web")));
+            services.AddEntityFrameworkCore<FuluDbContext>(opt => opt.UseNpgsql(connectionStrings.PgSql, b => b.MigrationsAssembly("Fulu.Passport.Web")));
         }
         /// <summary>
         /// Cache

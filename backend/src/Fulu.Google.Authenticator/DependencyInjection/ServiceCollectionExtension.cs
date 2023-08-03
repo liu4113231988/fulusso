@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Fulu.Google.Authenticator;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

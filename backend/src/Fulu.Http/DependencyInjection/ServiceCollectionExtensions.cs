@@ -3,6 +3,7 @@ using System.Net.Http;
 using Polly;
 using Polly.Timeout;
 using Polly.Registry;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

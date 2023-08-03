@@ -13,6 +13,7 @@ using IdentityModel;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Logging;
 using Fulu.Authentication;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -71,7 +72,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     ValidateLifetime = true
                 };
             });
-            services.AddAuthorization(options =>
+            services.AddAuthorizationCore(options =>
             {
                 options.AddPolicy("Basic",
                     policy =>

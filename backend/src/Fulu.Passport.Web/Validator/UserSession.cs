@@ -12,20 +12,20 @@ using Microsoft.Extensions.Logging;
 
 namespace Fulu.Passport.Web.Validator
 {
-    public class FuluUserSession: DefaultUserSession
+    public class FuluUserSession : DefaultUserSession
     {
-    public FuluUserSession(IHttpContextAccessor httpContextAccessor, IAuthenticationSchemeProvider schemes,
-        IAuthenticationHandlerProvider handlers, IdentityServerOptions options, ISystemClock clock,
-        ILogger<IUserSession> logger) : base(httpContextAccessor, schemes, handlers, options, clock, logger)
-    {
-    }
+        public FuluUserSession(IHttpContextAccessor httpContextAccessor, IAuthenticationSchemeProvider schemes,
+            IAuthenticationHandlerProvider handlers, IdentityServerOptions options, ISystemClock clock,
+            ILogger<IUserSession> logger) : base(httpContextAccessor, handlers, options, clock, logger)
+        {
+        }
 
-    public override async Task<ClaimsPrincipal> GetUserAsync()
-    {
-        var principal = await base.GetUserAsync();
-        if (principal == null) return null;
-        var amr = principal.FindFirstValue(JwtClaimTypes.AuthenticationMethod);
-        return !amr.Contains("mfa") ? null : principal;
-    }
+        public override async Task<ClaimsPrincipal> GetUserAsync()
+        {
+            var principal = await base.GetUserAsync();
+            if (principal == null) return null;
+            var amr = principal.FindFirstValue(JwtClaimTypes.AuthenticationMethod);
+            return !amr.Contains("mfa") ? null : principal;
+        }
     }
 }

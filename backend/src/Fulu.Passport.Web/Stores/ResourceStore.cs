@@ -12,6 +12,7 @@ namespace FuLu.IdentityServer.Stores
     {
         private readonly IEnumerable<IdentityResource> _identityResources;
         private readonly IEnumerable<ApiResource> _apis;
+        private readonly IEnumerable<ApiScope> _scopes;
         public ResourceStore()
         {
             _identityResources = new[] {
@@ -40,12 +41,16 @@ namespace FuLu.IdentityServer.Stores
                             CusClaimTypes.LoginAddress,
                             CusClaimTypes.LoginIp
                         },
-                        Scopes =  new List<Scope>
+                        Scopes =  new List<string>
                         {
-                            new Scope("get_user_info"),
-                            new Scope("api")
+                            "get_user_info",
+                            "api"
                         }
                     }
+            };
+            _scopes = new ApiScope[] {
+            new ApiScope("get_user_info"),
+            new ApiScope("api")
             };
         }
 
@@ -54,9 +59,24 @@ namespace FuLu.IdentityServer.Stores
             return Task.FromResult(_apis.FirstOrDefault(x => x.Name == name));
         }
 
+        public Task<IEnumerable<ApiResource>> FindApiResourcesByNameAsync(IEnumerable<string> apiResourceNames)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<IEnumerable<ApiResource>> FindApiResourcesByScopeAsync(IEnumerable<string> scopeNames)
         {
             return Task.FromResult(_apis.Where(x => x.Name == "api"));
+        }
+
+        public Task<IEnumerable<ApiResource>> FindApiResourcesByScopeNameAsync(IEnumerable<string> scopeNames)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<ApiScope>> FindApiScopesByNameAsync(IEnumerable<string> scopeNames)
+        {
+            throw new System.NotImplementedException();
         }
 
         public Task<IEnumerable<IdentityResource>> FindIdentityResourcesByScopeAsync(IEnumerable<string> scopeNames)
@@ -71,7 +91,7 @@ namespace FuLu.IdentityServer.Stores
 
         public Task<Resources> GetAllResourcesAsync()
         {
-            return Task.FromResult(new Resources(_identityResources, _apis));
+            return Task.FromResult(new Resources(_identityResources, _apis, _scopes));
         }
     }
 }

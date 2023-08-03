@@ -70,6 +70,8 @@ namespace Microsoft.EntityFrameworkCore
         /// </summary>
         /// <param name="entities">Inserted entity</param>
         Task InsertAsync(IEnumerable<TEntity> entities);
+
+        Task InsertAsync(TEntity entity);
         #endregion
 
         #region Update

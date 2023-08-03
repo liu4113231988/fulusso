@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
              {
                  //options.CheckConsentNeeded = context => true;
                  //options.MinimumSameSitePolicy = SameSiteMode.None;
-                 options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
+                 options.MinimumSameSitePolicy = SameSiteMode.Strict;
                  options.OnAppendCookie = cookieContext =>
                      CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
                  options.OnDeleteCookie = cookieContext =>

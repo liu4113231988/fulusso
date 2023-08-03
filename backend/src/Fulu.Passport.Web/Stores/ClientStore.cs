@@ -44,7 +44,7 @@ namespace IdentityServer4.Stores
                 AccessTokenType = AccessTokenType.Jwt,
                 AccessTokenLifetime = 7200,
                 ClientClaimsPrefix = "",
-                Claims = new[] { new Claim(JwtClaimTypes.Role, "Client"), new Claim(ClaimTypes.Role, "Client") }
+                Claims = new[] { new ClientClaim(JwtClaimTypes.Role, "Client"), new ClientClaim(ClaimTypes.Role, "Client") }
             };
         }
 

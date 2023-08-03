@@ -6,6 +6,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Drawing;
+using SkiaSharp;
 
 namespace Fulu.Google.Authenticator
 {
@@ -57,13 +59,26 @@ namespace Fulu.Google.Authenticator
             var provisionUrl = string.IsNullOrWhiteSpace(issuer) ? $"otpauth://totp/{HttpUtility.UrlEncode(accountName, Encoding.UTF8)}?secret={encodedSecretKey}" : string.Format("otpauth://totp/{2}:{0}?secret={1}&issuer={2}", HttpUtility.UrlEncode(accountName, Encoding.UTF8), encodedSecretKey, HttpUtility.UrlEncode(issuer, Encoding.UTF8));
             using (var qrGenerator = new QRCodeGenerator())
             using (var qrCodeData = qrGenerator.CreateQrCode(provisionUrl, QRCodeGenerator.ECCLevel.Q))
-            using (var qrCode = new QRCode(qrCodeData))
-            using (var qrCodeImage = qrCode.GetGraphic(qrPixelsPerModule))
-            using (var ms = new MemoryStream())
             {
-                qrCodeImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                return new SetupCode(accountName, encodedSecretKey, Convert.ToBase64String(ms.ToArray()));
+                //todo:qrcode net 7
+                var info = new SKImageInfo(200, 200);
+                using (var surface = SKSurface.Create(info))
+                {
+                    var canvas = surface.Canvas;
+                    //canvas.re
+                }
+
+                return null;
             }
+            //using (var qrCode = new QRCoder.QRCode(qrCodeData))
+            //using (var qrCodeImage = qrCode.GetGraphic(qrPixelsPerModule))
+            //using (var ms = new MemoryStream())
+            //{
+            //    qrCodeImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            //    return new SetupCode(accountName, encodedSecretKey, Convert.ToBase64String(ms.ToArray()));
+            //}
+
+
         }
 
         public string GeneratePinAtInterval(string accountSecretKey, long counter, int digits = 6)

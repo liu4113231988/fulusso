@@ -33,7 +33,7 @@ namespace IdentityServer4.Stores
         /// <returns></returns>
         public Task<string> StoreAuthorizationCodeAsync(AuthorizationCode code)
         {
-            return CreateItemAsync(code, code.ClientId, code.Subject.GetSubjectId(), code.CreationTime, code.Lifetime);
+            return CreateItemAsync(code, code.ClientId, code.Subject.GetSubjectId(), code.SessionId, "AuthorizationCode", code.CreationTime, code.Lifetime);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace IdentityServer4.Stores
         public async Task<AuthorizationCode> GetAuthorizationCodeAsync(string code)
         {
             var store = await GetItemAsync(code);
-            if (store == null) 
+            if (store == null)
                 return null;
             var redirectUri = new Uri(store.RedirectUri);
             if (!string.IsNullOrWhiteSpace(redirectUri.Query))

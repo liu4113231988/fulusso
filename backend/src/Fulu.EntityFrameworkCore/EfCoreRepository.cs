@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using static Dapper.SqlMapper;
 
 namespace Fulu.EntityFrameworkCore
 {
@@ -97,7 +98,7 @@ namespace Fulu.EntityFrameworkCore
 
         //}
 
-        
+
         public Task InsertAsync(IEnumerable<TEntity> entities)
         {
             if (!entities.Any())
@@ -187,7 +188,7 @@ namespace Fulu.EntityFrameworkCore
             _context.RemoveRange(Entities.Where(predicate));
         }
 
-#region Properties
+        #region Properties
 
         /// <summary>
         /// Gets a table
@@ -204,7 +205,7 @@ namespace Fulu.EntityFrameworkCore
         /// </summary>
         protected virtual DbSet<TEntity> Entities => _entities ?? (_entities = _context.Set<TEntity>());
 
-#endregion
+        #endregion
         protected virtual void AttachIfNot(TEntity entity)
         {
             var entry = _context.ChangeTracker.Entries().FirstOrDefault(ent => ent.Entity == entity);
@@ -213,6 +214,13 @@ namespace Fulu.EntityFrameworkCore
                 return;
             }
             _context.Attach(entity);
+        }
+
+        public async Task InsertAsync(TEntity entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException("entity");
+            await Entities.AddAsync(entity);
         }
     }
 }

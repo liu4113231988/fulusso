@@ -22,7 +22,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var config = new TConfig();
             configuration.Bind(config);
             services.AddSingleton(config);
-            services.Configure<TConfig>(configuration);
+            //services.ConfigureOptions<TConfig>(configuration);
             return config;
         }
     }

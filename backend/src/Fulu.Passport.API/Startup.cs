@@ -111,7 +111,7 @@ namespace Fulu.Passport.API
 
             services.AddAutoMapper(config =>
             {
-                config.ValidateInlineMaps = false;
+                //config.ValidateInlineMaps = false;
             });
 
             services.AddHttpContextAccessor();
@@ -151,7 +151,9 @@ namespace Fulu.Passport.API
         private void ConfigureEntityFrameworkCore(IServiceCollection services, ConnectionStrings connectionStrings)
         {
             //Ìí¼ÓKing
-            services.AddEntityFrameworkCore<FuluDbContext>(opt => opt.UseMySql(connectionStrings.MySql));
+            //services.AddEntityFrameworkCore<FuluDbContext>(opt => opt.UseMySQL(connectionStrings.MySql));
+            services.AddEntityFrameworkCore<FuluDbContext>(opt => opt.UseNpgsql(connectionStrings.PgSql));
+            //services.AddDbContext<FuluDbContext>(opt => opt.UseMySQL(connectionStrings.MySql));
         }
 
         /// <summary>
